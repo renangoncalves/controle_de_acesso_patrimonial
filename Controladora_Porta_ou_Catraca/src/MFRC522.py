@@ -7,7 +7,6 @@ import signal
 import time
 import decimal
 from datetime import datetime
-#import acionador
 
 class MFRC522:
   NRSTPD = 22
