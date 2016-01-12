@@ -275,6 +275,7 @@ class MFRC522:
     return pOutData
   
   def MFRC522_SelectTag(self, serNum):
+    print "MFRC522_SelectTag" + str(serNum)
     backData = []
     buf = []
     buf.append(self.PICC_SElECTTAG)
@@ -343,6 +344,7 @@ class MFRC522:
     i = 0
     if len(backData) == 16:
       print "Sector "+str(blockAddr)+" "+str(backData)
+    return backData
   
   def MFRC522_Write(self, blockAddr, writeData):
     buff = []
@@ -397,7 +399,7 @@ class MFRC522:
     self.Write_MFRC522(self.ModeReg, 0x3D)
     self.AntennaOn()
 
-  def MFRC522_Read_Memoria(self,setorMemoria, byteMemoria, resto_deslocamento_horaAtual):
+  def MFRC522_Read_Memoria(self, setorMemoria, byteMemoria):
   
   # Renan 2015-11-18 - Copia da funcao MFRC522_Read
     print " \n " + " -------------------- MFRC522_Read_Memoria -------------------- " + " \n "
