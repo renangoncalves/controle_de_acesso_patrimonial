@@ -15,10 +15,12 @@ class EntradaSaida:
         self.modo = _modo
         self.pino = _pino
         GPIO.setmode(GPIO.BOARD)
+        #GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
         
         if (_modo == 0):
-            GPIO.setup(self.pino, GPIO.IN)
+            #GPIO.setup(self.pino, GPIO.IN)
+            GPIO.setup(self.pino, GPIO.IN, pull_up_down=GPIO.PUD_UP) #com pull-down 
         else:
             GPIO.setup(self.pino, GPIO.OUT)
     
@@ -35,6 +37,9 @@ class EntradaSaida:
         '''ler valor do pino'''
         estadoPino = GPIO.input(self.pino)
         return estadoPino
+        print estadoPino
+        if (estadoPino == GPIO.LOW):
+            print "estado pino == 1"
     
     #   define_espera_limpa
     def set_wait_clear(self, tempo):

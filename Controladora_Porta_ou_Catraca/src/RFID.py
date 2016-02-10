@@ -24,14 +24,16 @@ class RFID:
         '''Pega UID do cartão'''
          
         (status,TagType) = self.rfid.MFRC522_Request(self.rfid.PICC_REQIDL)
-        print "RFID.get_id -- MFRC522_Request:  " + str(status)
+        #print "RFID.get_id -- MFRC522_Request:  " + str(status)
         (status, uid) = self.rfid.MFRC522_Anticoll()
-        print "RFID.get_id -- MFRC522_Anticoll:  " + str(status)
+        #print "RFID.get_id -- MFRC522_Anticoll:  " + str(status)
         
         if status == self.rfid.MI_OK:
-            print "\n RFID.get_id -- Card read UID: "+str(uid[0])+","+str(uid[1])+","+str(uid[2])+","+str(uid[3])
+            print "RFID.get_id -- Card read UID: "+str(uid[0])+","+str(uid[1])+","+str(uid[2])+","+str(uid[3])
         else:
-            print "\n RFID.get_id -- Card NOT detected"
+            self.get_id()
+        #else:
+            #print "RFID.get_id -- Card NOT detected, tentando novamente!!"
         return (status, uid)
     
     def read_setor(self, setorMemoria):

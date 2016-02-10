@@ -96,7 +96,7 @@ while continue_reading:
         # Check if authenticated
         if status == MIFAREReader.MI_OK:
             
-            retornoBackData = MIFAREReader.MFRC522_Read_Memoria(setorMemoria, byteMemoria, resto_deslocamento_horaAtual)
+            retornoBackData = MIFAREReader.MFRC522_Read_Memoria(setorMemoria, byteMemoria)
             print "return backData[byteMemoria]: " + str(retornoBackData) + " \n "
             #MIFAREReader.MFRC522_Read(setorMemoria)
             MIFAREReader.MFRC522_StopCrypto1()

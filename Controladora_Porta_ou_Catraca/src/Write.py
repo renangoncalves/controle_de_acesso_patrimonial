@@ -117,7 +117,7 @@ while continue_reading:
                 #    data.append(escreveValorMemoria)
                 
                 # Renan 2015-11-30 - Gravar manualmente as permissao dos agrupadores 1 e 2
-                permissao = 0
+                permissao = 1
                 if (permissao == 0):
                     #bloco 8
                     data1 = [128,255,15,128,255,15,128,255,15,128,255,15,128,255,15,128]
