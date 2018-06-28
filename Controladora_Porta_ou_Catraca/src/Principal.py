@@ -230,6 +230,45 @@ while continue_reading:
             else:
                 print "Principal -- Acesso Negado Porta Fechada!!"
             continualendo = False
+            
+    elif (teste == 91):
+        print "Principal -- Monitorando RFID e Botão Emulador"
+        continualendo = True
+        agrupador = 0
+            
+        while continualendo:
+            verificaRFID = RFID.RFID(key)
+            valorByteMemoria = 0
+            
+            resto_deslocamento_horaAtual = 0
+            setorMemoria = 0
+            posicaoByteMemoria = 0
+            
+            RFID_OK = False
+            horaAtual = now.hour
+            diaSemana = now.weekday()
+
+            '''Calcula posição memória para validar acesso'''
+            (setorMemoria, posicaoByteMemoria, resto_deslocamento_horaAtual) = verificaRFID.calc_setor_bloco(agrupador, diaSemana, horaAtual)
+            '''Captura o valor do byte correspondente ao diaSemana e Horário para validar o acesso'''
+            valorByteMemoria = verificaRFID.read_byte(setorMemoria, posicaoByteMemoria)
+            print "Principal -- valorByteMemoria: " 
+            print valorByteMemoria
+            
+            #Renan 2015-11-18 - Joao - Pega o bit 3 (quarto bit da direita para esquerda) e verifica se o resultado eh diferente de 0. Caso seja diferente de 0 eh pq esta OK, o bit analisado é 1.
+            if (valorByteMemoria != None):
+                if (valorByteMemoria & (1 << resto_deslocamento_horaAtual)):
+                    RFID_OK = True
+                    print "RFID_OK == True"
+         
+            if (RFID_OK == True):
+                RelePorta = EntradaSaida.EntradaSaida(1, 18)
+                tempoAcionamento = 2
+                RelePorta.set_wait_clear(tempoAcionamento)
+                print "Principal -- Porta Aberta!!"
+            else:
+                print "Principal -- Acesso Negado Porta Fechada!!"
+            continualendo = True
      
     elif (teste == 10):
         print "Principal -- Conectar / Desconectar do banco de dados."

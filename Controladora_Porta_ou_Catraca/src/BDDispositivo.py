@@ -7,12 +7,13 @@ import BDConexao
 class BDDispositivo(object):
 
     def __init__(self):
-        print("BDDispositivo ___init___ -- Iniciando a classe BDDispositivo.")
+        self.debugRenan = False 
+        if (self.debugRenan == True): print("BDDispositivo ___init___ -- Iniciando a classe BDDispositivo.")
         self.conectaBD = BDConexao.BDConexao()
     
     ##### REMOVER O INSERT NÃO SERÁ USADO
     def insert(self, IP, idAgrupador, idTipoDispositivo, IPServidor):
-        print("BDDispositivo insert -- Inserindo dados no BD.")
+        if (self.debugRenan == True): print("BDDispositivo insert -- Inserindo dados no BD.")
         self.conectaBD.conectar()
         cursor = self.conectaBD.conn.cursor()
         # incluir o OBJETO BDConexão
@@ -24,7 +25,7 @@ class BDDispositivo(object):
         self.conectaBD.desconectar()
         
     def select(self):
-        print("BDDispositivo select -- Selecionando registros.")
+        if (self.debugRenan == True): print("BDDispositivo select -- Selecionando registros.")
         self.conectaBD.conectar()
         cursor = self.conectaBD.conn.cursor()
         
@@ -32,12 +33,12 @@ class BDDispositivo(object):
         cursor.execute("""
             SELECT * FROM Dispositivo
         """)
-        print cursor.fetchall() 
+        if (self.debugRenan == True): print cursor.fetchall() 
         self.conectaBD.desconectar()
         #conn.commit()
         
     def update(self, IP, idAgrupador, idTipoDispositivo, IPServidor):
-        print("BDDispositivo update -- Atualizando os registros.")
+        if (self.debugRenan == True): print("BDDispositivo update -- Atualizando os registros.")
         self.conectaBD.conectar()
         cursor = self.conectaBD.conn.cursor()
 

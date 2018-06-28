@@ -117,7 +117,7 @@ while continue_reading:
                 #    data.append(escreveValorMemoria)
                 
                 # Renan 2015-11-30 - Gravar manualmente as permissao dos agrupadores 1 e 2
-                permissao = 1
+                permissao = 2
                 if (permissao == 0):
                     #bloco 8
                     data1 = [128,255,15,128,255,15,128,255,15,128,255,15,128,255,15,128]
@@ -125,6 +125,9 @@ while continue_reading:
                     data2 = [255,15,128,255,15,128,255,15,128,255,15,128,255,15,128,255]
                     #bloco 10
                     data3 = [15,128,255,15,128,255,15,128,255,15,0,0,0,0,0,0]
+                    #bloco 30
+                    #         AA,MM,DD,Nivel,xx ,xx ,xx ,xx ,xx ,xx ,x,x,x,x,x,x
+                    data4 = [16,07,31,255,255,255,255,255,255,255,0,0,0,0,0,0]
                 
                 if (permissao == 1):
                     #bloco 8
@@ -133,13 +136,22 @@ while continue_reading:
                     data2 = [255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255]
                     #bloco 10
                     data3 = [255,255,255,255,255,255,255,255,255,255,0,0,0,0,0,0]
-                 
+                    #bloco 30
+                    #         AA,MM,DD,Nivel,xx ,xx ,xx ,xx ,xx ,xx ,x,x,x,x,x,x
+                    data4 = [16,07,31,255,255,255,255,255,255,255,0,0,0,0,0,0]
+
+                if (permissao == 2):
+                    MIFAREReader.MFRC522_Read(4)
+                    data4 = [16,07,31,255,255,255,255,255,255,255,0,0,0,0,0,0]
+                    MIFAREReader.MFRC522_Write(4, data4)
+                    MIFAREReader.MFRC522_Read(4)
                 
                 print "Sector 8 looked like this:"
                 # Read block 8
                 MIFAREReader.MFRC522_Read(setorMemoria)
                 MIFAREReader.MFRC522_Read(setorMemoria+1)
                 MIFAREReader.MFRC522_Read(setorMemoria+2)
+                #MIFAREReader.MFRC522_Read(4)
                 print "\n"
     
                 print "Sector 8 will now be filled with 0xFF:"
@@ -147,13 +159,17 @@ while continue_reading:
                 MIFAREReader.MFRC522_Write(setorMemoria, data1)
                 MIFAREReader.MFRC522_Write(setorMemoria+1, data2)
                 MIFAREReader.MFRC522_Write(setorMemoria+2, data3)
+                #MIFAREReader.MFRC522_Write(4, data4)
+                
                 print "\n"
     
                 print "It now looks like this:"
                 # Check to see if it was written
                 MIFAREReader.MFRC522_Read(setorMemoria)
                 MIFAREReader.MFRC522_Read(setorMemoria+1)
-                MIFAREReader.MFRC522_Read(setorMemoria+2)                
+                MIFAREReader.MFRC522_Read(setorMemoria+2)  
+                #MIFAREReader.MFRC522_Read(4)
+              
                 print "\n"
 
                 # Stop

@@ -1,0 +1,32 @@
+Passo a passo para postar projeto no github.
+
+
+1.0 - git add README.md //adiciona o arquivo para que ele seja sincronizado com a nuvem.
+1.1 - git add .         // adiciona todos os arquivos de todos os diretório do projeto
+2.0 - git commit -m "first commit"  // descreve no commit as alterações realizadas, use o shift+enter para pular de linha
+3.0 - git push -u origin master
+
+
+https://git-scm.com/book/pt-br/v1/Ramifica%C3%A7%C3%A3o-Branching-no-Git-O-que-%C3%A9-um-Branch
+
+
+Funcionalidades
+
+Funcional:
+-Sensor, botão e Emergência 
+- Identificar permissão, liberar acesso e Registrar log
+
+Erro:
+
+- Revisar toda a parte que envolve o BD
+----- na tabela dispositivo foi inserido no BD o nomeDispositvo
+----- taleba logAcesso foram inserido o "Dispositivo_idDispositivo" e "nomeDispositivo"
+
+            
+ 
+- Conexão remota
+- Gravar permissão de acesso na tag remotamente
+- Visualizar remotamente os eventos
+-  
+
+

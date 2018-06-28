@@ -115,6 +115,7 @@ class MFRC522:
     GPIO.setup(22, GPIO.OUT)
     GPIO.output(self.NRSTPD, 1)
     self.MFRC522_Init()
+    self.debugRenan = False
   
   def MFRC522_Reset(self):
     self.Write_MFRC522(self.CommandReg, self.PCD_RESETPHASE)
@@ -275,7 +276,7 @@ class MFRC522:
     return pOutData
   
   def MFRC522_SelectTag(self, serNum):
-    print "MFRC522_SelectTag" + str(serNum)
+    if (self.debugRenan == True): print "MFRC522_SelectTag" + str(serNum)
     backData = []
     buf = []
     buf.append(self.PICC_SElECTTAG)
@@ -290,7 +291,7 @@ class MFRC522:
     (status, backData, backLen) = self.MFRC522_ToCard(self.PCD_TRANSCEIVE, buf)
     
     if (status == self.MI_OK) and (backLen == 0x18):
-      print "Size: " + str(backData[0])
+      if (self.debugRenan == True): print "Size: " + str(backData[0])
       return    backData[0]
     else:
       return 0
@@ -343,7 +344,7 @@ class MFRC522:
       print "Error while reading!"
     i = 0
     if len(backData) == 16:
-      print "Sector "+str(blockAddr)+" "+str(backData)
+      if (self.debugRenan == True): print "Sector "+str(blockAddr)+" "+str(backData)
     return backData
   
   def MFRC522_Write(self, blockAddr, writeData):
@@ -357,7 +358,7 @@ class MFRC522:
     if not(status == self.MI_OK) or not(backLen == 4) or not((backData[0] & 0x0F) == 0x0A):
         status = self.MI_ERR
     
-    print str(backLen)+" backdata &0x0F == 0x0A "+str(backData[0]&0x0F)
+    #if (self.debugRenan == True ): print str(backLen)+" backdata &0x0F == 0x0A "+str(backData[0]&0x0F)
     if status == self.MI_OK:
         i = 0
         buf = []
@@ -400,10 +401,10 @@ class MFRC522:
     self.AntennaOn()
 
   def MFRC522_Read_Memoria(self, setorMemoria, byteMemoria):
-  
+    
   # Renan 2015-11-18 - Copia da funcao MFRC522_Read
-    print " \n " + " -------------------- MFRC522_Read_Memoria -------------------- " + " \n "
-    print "Sector "+str(setorMemoria)+" "+str(byteMemoria)
+    if (self.debugRenan == True): print " \n " + " -------------------- MFRC522_Read_Memoria -------------------- " + " \n "
+    if (self.debugRenan == True): print "Sector "+str(setorMemoria)+" "+str(byteMemoria)
     recvData = []
     recvData.append(self.PICC_READ)
     recvData.append(setorMemoria)
@@ -416,7 +417,7 @@ class MFRC522:
     i = 0
     if len(backData) == 16:
         #print "Sector "+str(blockAddr)+" "+str(backData)  
-        print "MFRC522_Read_Memoria - Sector: "+str(setorMemoria)+" byteMemoria: "+str(backData[byteMemoria])
+        if (self.debugRenan == True): print "MFRC522_Read_Memoria - Sector: "+str(setorMemoria)+" byteMemoria: "+str(backData[byteMemoria])
    
         #Renan 2015-11-18 - Joao - Pega o bit 3 (quarto bit da direita para esquerda) e verifica se o resultado eh diferente de 0. Caso seja diferente de 0 eh pq esta OK, o bit analisado é 1.
 #         if (backData[byteMemoria] & (1 << resto_deslocamento_horaAtual)):
@@ -445,6 +446,6 @@ class MFRC522:
 #             print " ------ Acesso Negado ------ "
 #         
         return backData[byteMemoria]
-    print "\n \n "
+    if (self.debugRenan == True): print "\n \n "
 #---------------------------------------------------------------------------------------------
 # Renan -- FIM
