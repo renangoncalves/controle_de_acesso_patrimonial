@@ -9,6 +9,13 @@ Passo a passo para postar projeto no github.
 
 https://git-scm.com/book/pt-br/v1/Ramifica%C3%A7%C3%A3o-Branching-no-Git-O-que-%C3%A9-um-Branch
 
+iniciando os testes:
+```
+cd /controle_de_acesso_patrimonial/Controladora_Porta_ou_Catraca/src
+sudo python Principal.py
+```
+
+
 
 Funcionalidades
 

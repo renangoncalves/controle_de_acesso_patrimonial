@@ -25,10 +25,10 @@ while continue_reading:
         print "\n \n \n \n \n"
         print "!!!BUG na função 8 - Grava a permissão na memória.\n"
         print "!!!BUG na função 9 - Quando não possui uma tag o sistema morre.\n"
-        print "0 - Encerrar o teste."
-        print "1 - Ler UID."
-        print "2 - Aciona saídas, RelePorta e ReleAlarme."
-        print "3 - Verifica estado das entradas, Botão, SensorPorta e Emergência."
+        print "OK - 0 - Encerrar o teste."
+        print "OK - 1 - Ler UID."
+        print "OK - 2 - Aciona saídas, RelePorta e ReleAlarme."
+        print "OK - 3 - Verifica estado das entradas, Botão, SensorPorta e Emergência."
         print "4 - Ler setor memória."
         print "5 - Ler byte memória."
         print "6 - Calcula posição de memória."
@@ -59,10 +59,12 @@ while continue_reading:
 
     elif (teste == 1):
         print "\n \n Ler UID"
-        le_id = RFID.RFID(key = [0xFF,0xFF,0xFF,0xFF,0xFF,0xFF])
-        (status, uidTag) = le_id.get_id()
-        if (status == 0):
-            print "Principal -- UID: "+str(uidTag[0])+","+str(uidTag[1])+","+str(uidTag[2])+","+str(uidTag[3])
+        status = 1
+        while(status != 0):
+            le_id = RFID.RFID(key = [0xFF,0xFF,0xFF,0xFF,0xFF,0xFF])
+            (status, uidTag) = le_id.get_id()
+            if (status == 0):
+                print "Principal -- UID: "+str(uidTag[0])+","+str(uidTag[1])+","+str(uidTag[2])+","+str(uidTag[3])
         
     elif (teste == 2):
         print "Principal -- Aciona saídas, RelePorta e ReleAlarme. "
@@ -72,7 +74,7 @@ while continue_reading:
         ReleAlarme = EntradaSaida.EntradaSaida(1, 16)
         tempoAcionamento = 2
         ReleAlarme.set_wait_clear(tempoAcionamento)
-        print "Principal -- Saída rele, desligado"
+        print "Principal -- Teste saídas, RelePorta e ReleAlarme executados"
 
     elif (teste == 3):
         print "Principal -- Verifica estado das entradas, Botão, SensorPorta e Emergência."
@@ -80,22 +82,13 @@ while continue_reading:
         bntEmulador = EntradaSaida.EntradaSaida(0, 12)
         statusPinoBotao = bntEmulador.get()
         sensorPorta = EntradaSaida.EntradaSaida(0, 11)
-        statusPinoSensor = bntEmulador.get()
+        statusPinoSensor = sensorPorta.get()
         emergencia = EntradaSaida.EntradaSaida(0, 36)
-        statusPinoEmergencia = bntEmulador.get()
+        statusPinoEmergencia = emergencia.get()
         print statusPinoBotao
         print statusPinoSensor
         print statusPinoEmergencia
-        
-        '''
-        if (stadoPino == True):
-            print "Principal -- Porta Aberta. \n"
-            RelePorta = EntradaSaida.EntradaSaida(1, 18)
-            tempoAcionamento = 2
-            RelePorta.set_wait_clear(tempoAcionamento)
-        else: 
-            print "Principal -- Porta Fechada. \n"
-        '''
+
     elif (teste == 4):        
         print "Principal -- Ler setor memória"
         
@@ -105,8 +98,9 @@ while continue_reading:
         except:
             print(" Principal -- Ler setor memória except-- Valor incorreto:  ")
         
-        le_memoria = RFID.RFID(key)  
-        memoria = le_memoria.read_setor(setorMemoria)
+        le_id = RFID.RFID(key)
+        (status, uidTag) = le_id.get_id()
+        memoria = le_id.read_setor(setorMemoria, status, uidTag)
         print "Principal read_setor -- Dados memória: "+ str(memoria)
         
     elif (teste == 5):        
